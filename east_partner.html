@@ -1,0 +1,42 @@
+<html>
+    <head>
+            <meta charset="utf-8">
+            <title>Europe_thavle_Partner</title>
+            <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+            <style>
+                table {
+                    border-collapse: collapse;
+                }
+                table#t01 tr:nth-child(even) {
+                    background-color: #eee;
+                }
+                table#t01 tr:nth-child(odd) {
+                    background-color: #fff;
+                }
+                th {
+                    background-color : rgb(161, 161, 161);
+                    border-bottom: 1px solid;
+                }
+            </style>
+    </head>
+    <body>
+        <!--외교부 안전정보 API-->
+
+        <!--글 검색-->
+        <div class="search">
+            <p>Search </p>
+        </div>
+        <!--글 게시판-->
+        <div class = "board">
+            <p>게시판</p>
+            <table>
+                <tr>
+                    <th>글번호</th> <th>국가</th> <th>지역</th> <th>목적</th> <th>날짜</th> <th>제목</th> <th>글쓴이</th>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <button>Write</button>
+        </div>
+    </body>
+</html>

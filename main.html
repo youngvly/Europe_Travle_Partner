@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Europe_Travle_Partner</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <header>
+        <a href ="">Home</a>
+        <a href ="">East</a>
+        <a href ="">West</a>
+        <a href ="">South</a>
+        <a href ="">North</a>
+        <a href ="">MyPage</a>
+        <a href ="">Logout</a>
+    </header>
+
+    <div id="main">
+        <div class="main-menu" @mouseover="active = true" @mouseleave ="active=false" >
+            <a class = "main-a" >East Europe</a>
+            <showmenu v-show="active"></showmenu>
+        </div>
+        <div class="main-menu">
+            <a class = "main-a">West Europe</a>
+        </div>
+        <div class="main-menu">
+            <a class = "main-a">South Europe</a>
+        </div>
+        <div class="main-menu">
+            <a class = "main-a">North Europe</a>
+        </div>
+    </div>
+    <script>
+    //show second menu if hover
+    Vue.component('showmenu',{
+        template : '</br> \
+                    <a class ="second-menu">Review</a>\
+                    <a class = "second-menu">Partner</a> </br>'
+    })
+
+    var mainVue = new Vue({
+        el : '#main',
+        data : {
+            active : false
+        }
+    })
+    </script>
+</body>
+</html>
