@@ -89,8 +89,45 @@
                     echo ("<tr><td>국가 : $row[country]</td><td>지역 : $row[region]</td><td>인원 : $row[engagedPeople]/$row[requiredPeople]</td></tr>");
                     echo ("<tr><td colspan='3'>희망 날짜 : $row[app_date]</td></tr>");
                     echo("<tr><td colspan='3' height='200px'>$row[contents]</td></tr>");
+
                 ?>
             </table>
+
+           
+           <?
+                    //덧글 East_Partner_ripple
+                        $psql = "SELECT * from east_partner_ripple where row[boardID]";
+                        $presult = mysql_query($psql,$connect);
+          
+                        while($prow = mysql_fetch_array($presult)){
+                          //userID , name 연동
+                          $sql = "SELECT name,userID FROM user WHERE userID IN ($prow[userID])";
+                          $nameSQL = mysql_query($sql);
+                          if(!$nameSQL) echo"sql error";
+                          $namerow = mysql_fetch_array($nameSQL);
+                    ?>
+                    <div class = "container">
+                      <div class="col-sm-1">
+                        <div class="thumbnail">
+                          <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                        </div><!-- /thumbnail -->
+                      </div><!-- /col-sm-1 -->
+
+                      <div class="col-sm-5">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <strong><?=$namerow[0]?></strong> <span class="text-muted"><?=$prow[reg_date]?></span>
+                          </div>
+                          <div class="panel-body">
+                            <?=$prow[contents]?>
+                          </div><!-- /panel-body -->
+                        </div><!-- /panel panel-default -->
+                      </div><!-- /col-sm-5 -->
+                    </div><!-- /container-->
+                        <?
+                          }   //ripple while close
+                        ?>
+            
         </div>
         
         <div>

@@ -1,3 +1,4 @@
+USE EUROPE_TRAVLE_PARTNER;
 
 create table if not exists user (
     userID int not null AUTO_INCREMENT,
@@ -58,3 +59,13 @@ create table if not exists East_Partner_Board (
     INDEX board_pid(board_pid),
     FOREIGN KEY (userID) REFERENCES user(userID)
 );
+
+create table if not exists East_Partner_Ripple (
+    ripID int not null AUTO_INCREMENT primary key,
+    boardID int not null comment '메인글의 일련번호',
+    userID int not null,
+    contents text NOT NULL,
+    reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP comment '등록일',
+    FOREIGN KEY (userID) REFERENCES user(userID),
+    FOREIGN KEY (boardID) REFERENCES East_Partner_Board(boardID)
+)

@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
     <!-- Custom fonts for this template -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -20,19 +21,18 @@
     <!-- Custom styles for this template -->
     <link href="css/clean-blog.min.css" rel="stylesheet">
 
-    <? //PHP DB Connect init
-        ini_set('display_errors','On');
-
-        $connect = mysql_connect('localhost','root','123456');
-        if(!$connect) echo "데이터베이스 연결 실패";
-        mysql_select_db('Europe_travle_Partner',$connect);
-
+    <? 
+        //session_start()
+          session_start();
+          $_SESSION['userID']='';
+          
+        //PHP DB Connect init
+        include "/php/dbConnect.php";
         //east_partner_board 게시판출력
         $sql = "SELECT boardID,country,region,subject,DATE_FORMAT(app_date,'%Y-%m-%d')DATEONLY ,title,userID
                 ,requiredPeople,engagedPeople,contents,hits,reg_date FROM east_partner_board ";
         
         $result = mysql_query($sql,$connect);
-        $click =1;
     ?>
   </head>
     <body>
@@ -83,80 +83,108 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
         <p>
+          <? //게시판 목록출력
+              $i=0;
+              while($row = mysql_fetch_array($result)){
+                $i +=1;
+                echo('<div class="post-preview">');
+                echo("<a onclick='$click=$row[boardID]' data-toggle='collapse' href='#collapseExample$i' ");
+                echo (' role="button" aria-expanded="false" aria-controls="collapseExample"></br>');
+                //title
+                echo('<h2 class="post-title">');
+                echo("$row[title]");
+                echo("</h2>");
+                //subtitle
+                echo('<h3 class="post-subtitle">');
+                echo("$row[country] / $row[region] / $row[subject] / 희망 날짜 $row[4]");
+                echo('</h3>');
+                //username을 출력하기 위해 user DB와 연동 
+                $sql = "SELECT name,userID FROM user WHERE userID IN ($row[6])";
+                $nameSQL = mysql_query($sql);
+                if(!$nameSQL) echo"sql error";
+                $namerow = mysql_fetch_array($nameSQL);
 
+                echo('<p class="post-meta">Posted by <a href="#"> ');
+                echo("$namerow[0]</a>  $row[reg_date]</p>");
+                echo('</a></div>');
+              ?>
+              <!--게시판 글,댓글출력-->
+                <div class='collapse' id='collapseExample<?=$i?>'>
+                    <div class='card card-body'>  
+                                
+                    <table>
+                    <tr><td text-align='right'>조회수 :<?= $row[hits]?></td></tr>
+                    <tr><td colspan='3' height='200px'><?=$row[contents]?></td></tr>
+                    </table>
 
-                <? //게시판 목록출력
-                    while($row = mysql_fetch_array($result)){
-                        echo('<div class="post-preview">');
-                        echo("<a onclick='$click=$row[boardID]'");
-                        echo('data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"">');
-                        //title
-                        echo('<h2 class="post-title">');
-                        echo("$row[title]");
-                        echo("</h2>");
-                        //subtitle
-                        echo('<h3 class="post-subtitle">');
-                        echo("$row[country] / $row[region] / $row[subject] / 희망 날짜 $row[4]");
-                        echo('</h3>');
-                        //username을 출력하기 위해 user DB와 연동 
-                        $sql = "SELECT name,userID FROM user WHERE userID IN ($row[6])";
-                        $nameSQL = mysql_query($sql);
-                        if(!$nameSQL) echo"sql error";
-                        $namerow = mysql_fetch_array($nameSQL);
+                    <?
+                    //덧글 East_Partner_ripple 출력
+                        $psql = "SELECT * from east_partner_ripple where boardID IN ($row[boardID])";
+                        $presult = mysql_query($psql,$connect);
+          
+                        while($prow = mysql_fetch_array($presult)){
+                          //userID , name 연동
+                          $sql = "SELECT name,userID FROM user WHERE userID IN ($prow[userID])";
+                          $nameSQL = mysql_query($sql);
+                          if(!$nameSQL) echo"sql error";
+                          $namerow = mysql_fetch_array($nameSQL);
+                    ?>
+                    <div class = "container">
+                      <div class="col-sm-1">
+                        <div class="thumbnail">
+                          <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                        </div><!-- /thumbnail -->
+                      </div><!-- /col-sm-1 -->
 
-                        echo('<p class="post-meta">Posted by <a href="#"> ');
-                        echo("$namerow[0]</a>$row[reg_date]</p>");
-                        echo('</a></div>');
-                        
-                    }
-                    
-                ?>
+                      <div class="col-sm-5">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <strong><?=$namerow[0]?></strong> <span class="text-muted"><?=$prow[reg_date]?></span>
+                          </div>
+                          <div class="panel-body">
+                            <?=$prow[contents]?>
+                          </div><!-- /panel-body -->
+                        </div><!-- /panel panel-default -->
+                      </div><!-- /col-sm-5 -->
+                    </div><!-- /container of 댓글출력-->
+                        <?
+                          }   //ripple while close
+                        ?>
+                    <!--댓글 입력창 -->
+                    <div class = "container">
+                      <div class="col-sm-1">
+                        <div class="thumbnail">
+                          <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                        </div><!-- /thumbnail -->
+                      </div><!-- /col-sm-1 -->
+                    <form name="RippleInput" id="rippleinputForm" action ="php/insert_ripple.php" method="post" novalidate>
+                    <div class="col-sm-5">
+                      <input type="hidden" name="boardID" value="<?=$row[boardID]?>">
+                      <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                          <label>댓글입력</label>
+                          <input type="text" class="form-control" placeholder="댓글을 입력하세요" 
+                            id="ripple_content" required data-validation-required-message="Please enter your name.">
+                          <p class="help-block text-danger"></p>
+                        </div>
+                      </div><!-- /control-group -->
+                    </div><!-- /col-sm-5 -->
+                    <button type="submit" class="btn btn-secondary" id="RippleButton">Enter</button>
+                    </form>
+                    </div><!-- /container of 댓글입력-->
 
-                <?
-                    //게시판 글출력
-                    $sql = "SELECT * from east_partner_board where boardID = $click";
-                    $result = mysql_query($sql,$connect);
-                    $row = mysql_fetch_array($result);
-                    $sql = "SELECT name,userID FROM user WHERE userID IN ($row[userID])";
-                    $nameSQL = mysql_query($sql);
-                    $namerow = mysql_fetch_array($nameSQL);
-
-                    echo('<div class="collapse" id="collapseExample"+"$click">
-                        <div class="card card-body">');              
-                        echo("<table>");
-                       // echo "<tr><td colspan='3'><h4>$row[subject]</h4><h3 align='center'>$row[title]</h3></td></tr>";
-                        echo("<tr><td>작성자 : $namerow[name]</td><td>작성일 : $row[reg_date]</td><td>조회수 : $row[hits]</td></tr>");
-                        echo ("<tr><td>국가 : $row[country]</td><td>지역 : $row[region]</td><td>인원 : $row[engagedPeople]/$row[requiredPeople]</td></tr>");
-                        echo ("<tr><td colspan='3'>희망 날짜 : $row[app_date]</td></tr>");
-                        echo("<tr><td colspan='3' height='200px'>$row[contents]</td></tr>");
-                    echo('</table></div></div>');
-                    
-                ?>
-                    
+                    </div><!-- /게시판 글출력 close-->
                 </div>
+              <?}?> <!--게시판 출력 close-->
 
-          <hr>
-          <!-- <div class="post-preview">
-            <a href="post.html">
-              <h2 class="post-title">
-                Failure is not an option
-              </h2>
-              <h3 class="post-subtitle">
-                Many say exploration is part of our destiny, but it’s actually our duty to future generations.
-              </h3>
-            </a>
-            <p class="post-meta">Posted by
-              <a href="#">Start Bootstrap</a>
-              on July 8, 2018</p>
-          </div> -->
-          <hr>
           <!-- Pager -->
           <div class="clearfix">
             <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
           </div>
+
         </div>
-      </div>
-    </div>
+      </div><!-- /row of main-->
+    </div><!-- /container of main-->
  <!-- Footer -->
  <footer>
       <div class="container">
@@ -196,6 +224,7 @@
 
     <!-- Bootstrap core JavaScript -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom scripts for this template -->

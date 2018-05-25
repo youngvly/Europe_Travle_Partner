@@ -12,6 +12,13 @@ VALUES (2,true,false,true,false,true,false,true);
 
 INSERT INTO EAST_PARTNER_BOARD (userID,subject,country,region,requiredPeople,engagedPeople,title,contents)
 VALUES (1,'식사','CZECH','PRAHA',3,0,'같이 저녁먹어요','내용은 저녁먹을사람! ');
+INSERT INTO EAST_PARTNER_BOARD (userID,subject,country,region,requiredPeople,engagedPeople,title,contents)
+VALUES (2,'여행','CZECH','PRAHA',5,0,'야경보러가요 ','비셰흐라드 갈사람!');
 
 INSERT INTO EAST_REVIEW_BOARD (userID,subject,country,region,title,star,contents)
 VALUES (1,'맛집','CZECH','PRAHA','프라하 꼴레뇨 맛집',5,'여기여기 맛있어요 짱짱 별점5');
+
+INSERT INTO EAST_PARTNER_RIPPLE (boardID,userID,contents)
+VALUES (1,2,'저요저요!');
+INSERT INTO EAST_PARTNER_RIPPLE (boardID,userID,contents)
+VALUES (1,1,'22222');
