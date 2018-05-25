@@ -3,6 +3,9 @@
             <meta charset="utf-8">
             <title>Europe_thavle_Partner</title>
             <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+            <script src ="node_modules/jquery/dist/jquery.min.js"></script>
+            <script type="text/javascript" src="node_modules/jquery/jquery.xdomainajax.js"></script>
+            <script src="callAPI.js"></script>
             <style>
                 table {
                     border-collapse: collapse;
@@ -26,7 +29,9 @@
     <body>
     <div id="all">
         <!--외교부 안전정보 API-->
-
+        <div class="api">
+        
+        </div>
         <!--글 검색-->
         <div class="search">
             <p>Search </p>
