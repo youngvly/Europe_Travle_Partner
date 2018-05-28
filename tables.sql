@@ -1,37 +1,40 @@
-USE EUROPE_TRAVLE_PARTNER;
+USE EUROPE_TRAVEL_PARTNER;
 
 create table if not exists user (
-    userID int not null AUTO_INCREMENT,
+    id varchar(15) not null,
+    pass varchar(255) not null,
     name varchar(10) not null,
     age int,
+    gender enum('F','M'),
     address varchar(30),
     tel char(13),
     email char(30),
 
-    Primary Key(userID)
+    Primary Key(id)
 );
 
 create table if not exists travelType(
-    typeID int not null AUTO_INCREMENT,
-    userID int not null,
-    foreign key (userID) References user(userID),
-    primary key (typeID),
+    userID varchar(15) not null,
+    foreign key (userID) References user(id),
+    primary key (userID), 
 
     photo boolean comment'who like takes photo',  /*사진찍는걸좋아한다*/
     food boolean comment'who like eat national food',   /*먹방여행을 좋아한다*/
     shopping boolean comment'who like shopping', /*쇼핑하는것을 좋아한다.*/
     plan boolean comment 'who like hard planning',   /*계획을 철저히 세운다*/
-    walkorRide boolean comment 'who like walk or use transport',   /*걷는것을 선호한다 T / 대중교통을 선호한다. F*/
-    naturalOrCity boolean comment 'who like natural view or Modern', /*자연경관 구경을 선호한다 T .도시구경을 선호한다. F*/
-    silenceOrCrowd boolean comment 'who prefer silence or crowd place' /*사람없는곳을 선호한다 T / 사람많은곳을 선호한다.*/
-
+    ride boolean comment 'who like use transport',
+    walk boolean,
+    naturals boolean,
+    city boolean,
+    crowd boolean,
+    silence boolean
 );
 
 create table if not exists  East_Review_Board (
     boardID int not null AUTO_INCREMENT PRIMARY KEY,
     board_pid int(10) DEFAULT 0 comment '원글번호',
-    userID int not null ,
-    FOREIGN KEY (userID) REFERENCES user(userID),
+    userID varchar(15) not null ,
+    FOREIGN KEY (userID) REFERENCES user(id),
     subject varchar(10) comment '머릿말' not null,   /*숙소 맛집 기타*/
     country varchar(20) comment '국가',
     region varchar(20) comment '지역',
@@ -46,7 +49,7 @@ create table if not exists  East_Review_Board (
 create table if not exists East_Partner_Board (
     boardID int not null AUTO_INCREMENT PRIMARY KEY,
     board_pid int(10) DEFAULT 0 comment '원글번호',
-    userID int not null ,
+    userID varchar(15) not null ,
     subject varchar(10) comment '머릿말',   --
     country varchar(20) comment '국가' not null,
     region varchar(20) comment '지역' not null,
@@ -57,15 +60,15 @@ create table if not exists East_Partner_Board (
     hits int (10) NOT NULL DEFAULT 0 COMMENT '조회수',
     reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
     INDEX board_pid(board_pid),
-    FOREIGN KEY (userID) REFERENCES user(userID)
+    FOREIGN KEY (userID) REFERENCES user(id)
 );
 
 create table if not exists East_Partner_Ripple (
     ripID int not null AUTO_INCREMENT primary key,
     boardID int not null comment '메인글의 일련번호',
-    userID int not null,
+    userID varchar(15) not null,
     contents text NOT NULL,
     reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP comment '등록일',
-    FOREIGN KEY (userID) REFERENCES user(userID),
+    FOREIGN KEY (userID) REFERENCES user(id),
     FOREIGN KEY (boardID) REFERENCES East_Partner_Board(boardID)
 )
