@@ -3,6 +3,6 @@
 
         $connect = mysql_connect('localhost','root','123456');
             if(!$connect) echo "데이터베이스 연결 실패";
-        mysql_select_db('Europe_travle_Partner',$connect);
+        mysql_select_db('Europe_travel_Partner',$connect);
 
     ?>

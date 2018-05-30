@@ -10,12 +10,13 @@
 <body>
     
     <?
-        include "php/dbConnect.php";
+        include "../dbConnect.php";
 
+        echo("dbconnected");
         $sql = "select * from user where id = $user";
         $result = mysql_query($sql,$connect);
         //아이디 에러
-        if (!$row = mysql_num_row($result)){
+        if (!$row = mysql_num_rows($result)){
             //$("#output").addClass("alert alert-danger animated fadeInUp").html("등록된 id가 업습니다.");
         };
 

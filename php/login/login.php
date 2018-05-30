@@ -14,19 +14,7 @@
                // $.post('login.php', {user: id});
                 e.preventDefault();
                 //little validation just to check username
-                <?
-                    extract($_POST);
-                    extract($_SESSION);
-                    //session_start(); 
-                    $connect = mysql_connect('localhost','root','123456');
-                     if(!$connect) echo "데이터베이스 연결 실패";
-                    mysql_select_db('Europe_travle_Partner',$connect);
-                    
-                    $sql = "select * from user where id IN('$user')";
-                    $result = mysql_query($sql,$connect);
-                    $isid =  mysql_num_rows($result);
-                   // echo("$user $isid");
-                ?>
+
                 //little validation just to check username
                 
                 var isid = <?=$isid?>;
@@ -65,61 +53,25 @@
                 //console.log(textfield.val());
 
             });
-    });
+    });*/
     </script>
 </head>
 
 <body>
 <?
     
-    //login check
-    /*   
-        extract($_POST);
-        extract($_GET);
-        extract($_SESSION);
-        include "php/dbConnect.php";
-        session_start();
-        if($mode =="check"){
-        
-        $sql = "select * from user where id IN('$user')";
-        $result = mysql_query($sql,$connect);
-        //아이디 에러
-        if (! mysql_num_rows($result)){?>
-            <script>$("#output").addClass("alert alert-danger animated fadeInUp").html("등록된 id가 업습니다.");</script>
-        <?}
-
-        else {
-             $row = mysql_fetch_array($result);
-            //패스워드 에러
-            echo("$row[1]");
-            if($row[1] != '$password'){?>
-             <script>$("#output").addClass("alert alert-danger animated fadeInUp").html("패스워드가 올바르지 않습니다.");</script>
-                <?
-                exit;
-            }
-            else{
-                $_SESSION['id'] = $row[id];
-                $_SESSION['userid'] = $row[userid];
-                $_SESSION['username']=$row[username];
-
-                echo ("
-                    <script>
-                        location.href ='main_boot.php';
-                    </script>
-                ");
-            }; 
-        };
-    }*/
+  
     ?>
     <div class="container">
         <div class="login-container">
                 <div id="output"></div>
                 <div class="avatar"></div>
                 <div class="form-box">
-                    <form action="login.php?mode=check" method='post'>
-                        <input name="user" type="text" placeholder="username">
-                        <input name ="password" type="password" placeholder="password">
+                    <form action="logincheck2.php" method='post'>
+                        <input name="id" type="text" placeholder="username">
+                        <input name ="pass" type="password" placeholder="password">
                         <button class="btn btn-info btn-block login" type="submit">Login</button>
+                        <a class="btn join" type="" href="login_sign_up.php">Sign up!</a>
                     </form>
                 </div>
             </div>

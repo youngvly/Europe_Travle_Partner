@@ -165,3 +165,7 @@ html,body{
   -webkit-animation-name: fadeInUp;
   animation-name: fadeInUp;
 }
+
+.btn.join {
+    margin-top: 15px;
+}

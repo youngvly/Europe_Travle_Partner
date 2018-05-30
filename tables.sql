@@ -9,7 +9,8 @@ create table if not exists user (
     address varchar(30),
     tel char(13),
     email char(30),
-
+    intro text ,
+    
     Primary Key(id)
 );
 
@@ -18,16 +19,16 @@ create table if not exists travelType(
     foreign key (userID) References user(id),
     primary key (userID), 
 
-    photo boolean comment'who like takes photo',  /*사진찍는걸좋아한다*/
-    food boolean comment'who like eat national food',   /*먹방여행을 좋아한다*/
-    shopping boolean comment'who like shopping', /*쇼핑하는것을 좋아한다.*/
-    plan boolean comment 'who like hard planning',   /*계획을 철저히 세운다*/
-    ride boolean comment 'who like use transport',
-    walk boolean,
-    naturals boolean,
-    city boolean,
-    crowd boolean,
-    silence boolean
+    photo boolean comment'who like takes photo' DEFAULT 0,  /*사진찍는걸좋아한다*/
+    food boolean comment'who like eat national food' DEFAULT 0,   /*먹방여행을 좋아한다*/
+    shopping boolean comment'who like shopping' DEFAULT 0, /*쇼핑하는것을 좋아한다.*/
+    plan boolean comment 'who like hard planning' DEFAULT 0,   /*계획을 철저히 세운다*/
+    ride boolean comment 'who like use transport' DEFAULT 0,
+    walk boolean DEFAULT 0 ,
+    naturals boolean DEFAULT 0,
+    city boolean DEFAULT 0,
+    crowd boolean DEFAULT 0,
+    silence boolean DEFAULT 0
 );
 
 create table if not exists  East_Review_Board (
