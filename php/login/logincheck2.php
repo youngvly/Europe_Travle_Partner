@@ -1,46 +1,51 @@
 
-<script>
-  fuction success() {
-                    //$("body").scrollTo("#output");
-                    $("#output").addClass("alert alert-success animated fadeInUp").html("Welcome back " + "<span style='text-transform:uppercase'>" + textfield.val() + "</span>");
-                    $("#output").removeClass(' alert-danger');
-                    $("input").css({
-                    "height":"0",
-                    "padding":"0",
-                    "margin":"0",
-                    "opacity":"0"
-                    });
-                    //change button text 
-                    $('button[type="submit"]').html("continue")
-                    .removeClass("btn-info")
-                    .addClass("btn-default").click(function(){
-                    $("input").css({
-                    "height":"auto",
-                    "padding":"10px",
-                    "opacity":"1"
-                    }).val("");
-                    });
-                    
-                    //show avatar
-                    $(".avatar").css({
-                        "background-image": "url('http://api.randomuser.me/0.3.2/portraits/women/35.jpg')"
-                    });
-  }
-</script>
+<html>
+  <head>
+    <?
+      session_start();
+    ?>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <meta charset="utf-8">
+  <script>
+    var A = function() {
+      parent.$("#output").addClass("alert alert-success animated fadeInUp").html("Welcome back " 
+      + "<span style='text-transform:uppercase'>" + <?=$row[name]?> + "</span>");
+            parent.$("#output").removeClass(' alert-danger');
+            parent.$("input").css({
+            "height":"0",
+            "padding":"0",
+            "margin":"0",
+            "opacity":"0"
+            });
+            //change button text 
+            parent.$('button[type="button"]').html("continue")
+            .removeClass("btn-info")
+            .addClass("btn-default").click(function(){
+              history.go(-1);
+              })/* .click(function(){
+              parent.$("input").css({
+            "height":"auto",
+            "padding":"10px",
+            "opacity":"1"
+            }).val("");
+            }) */;
+    }
+  </script>
+  </head>
+  <body>
 
 <?
-           session_start();
-?>
-<meta charset="utf-8">
-<?
-    extract($_POST);
+    extract($_GET);
    // 이전화면에서 이름이 입력되지 않았으면 "이름을 입력하세요"
    // 메시지 출력
    if(!$id) {
      echo("
            <script>
-             window.alert('아이디를 입력하세요.')
-             history.go(-1)
+             //window.alert('아이디를 입력하세요.');
+             parent.$('#output').removeClass(' alert alert-success');
+             parent.$('#output').addClass('alert alert-danger animated fadeInUp').html('아이디를 입력하세요');
+
+             //history.go(-1)
            </script>
          ");
          exit;
@@ -49,14 +54,16 @@
    if(!$pass) {
      echo("
            <script>
-             window.alert('비밀번호를 입력하세요.')
-             history.go(-1)
+             //window.alert('비밀번호를 입력하세요.');
+             parent.$('#output').removeClass(' alert alert-success');
+             parent.$('#output').addClass('alert alert-danger animated fadeInUp').html('비밀번호를 입력하세요');
+             //history.go(-1)
            </script>
          ");
          exit;
    }
 
-   include "dbConnect.php";
+   include "../dbConnect.php";
 
    $sql = "select * from user where id='$id'";
    $result = mysql_query($sql, $connect);
@@ -67,8 +74,9 @@
    {
      echo("
            <script>
-             window.alert('등록되지 않은 아이디입니다.')
-             history.go(-1)
+           parent.$('#output').removeClass(' alert alert-success');
+           parent.$('#output').addClass('alert alert-danger animated fadeInUp').html('등록되지 않은 아이디입니다.');
+             //history.go(-1)
            </script>
          ");
     }
@@ -77,32 +85,36 @@
         $row = mysql_fetch_array($result);
 
         $db_pass = $row["pass"];
-        echo("$db_pass </br>");
 
-        if(password_verify($pass,$db_pass))
+        if(!password_verify($pass,$db_pass))
         {
            echo("
               <script>
-                window.alert('비밀번호가 틀립니다.')
+              parent.$('#output').removeClass(' alert alert-success');
+              parent.$('#output').addClass('alert alert-danger animated fadeInUp').html('비밀번호가 틀립니다.');
                 //history.go(-1)
               </script>
            ");
 
            exit;
         }
-        else
+        else  //로그인 성공
         {
-           $userid = $row["userID"];
-
+           $userid = $row["id"];
            $_SESSION['userid'] = $userid;
-
+          
            echo("
               <script>
-                success();
-                history.go(-1)
-                location.href = '../main_boot.php';
+                parent.document.getElementById('success').value = true; 
+                console.log(' login success');
+                A();
+                //history.go(-1)
+                //location.href = '../../main_boot.php';
               </script>
            ");
         }
    }          
 ?>
+
+  </body>
+</html>

@@ -126,7 +126,7 @@
             <input type=button value="취소" onclick="history.back();">
             </form>
           </div><!--/form-->
-          <iframe src="" id="ifrm1" scrolling=no frameborder=no width=600 height=100 name="ifrm1"></iframe>
+          <iframe src="" id="ifrm1" scrolling=no frameborder=no width=0 height=0 name="ifrm1"></iframe>
       </div><!--/signup-->
   
     <script>
