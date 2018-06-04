@@ -60,6 +60,7 @@ create table if not exists East_Partner_Board (
     contents text NOT NULL comment '게시글 내용',
     hits int (10) NOT NULL DEFAULT 0 COMMENT '조회수',
     reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
+    reg_date datetime  COMMENT '약속일',   
     INDEX board_pid(board_pid),
     FOREIGN KEY (userID) REFERENCES user(id)
 );
