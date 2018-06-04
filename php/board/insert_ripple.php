@@ -6,7 +6,7 @@
 ?>
 <meta charset="utf-8">
 <?
-    if(!$userID){
+    if(!$userId){
         echo("
             <script>
                 window.alert('로그인 후 이용하세요.');

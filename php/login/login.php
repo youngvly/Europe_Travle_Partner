@@ -2,6 +2,7 @@
 <head>
 <?
       session_start();
+      extract($_SESSION);
     ?>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
@@ -39,8 +40,8 @@
             },
             methods :{
                 child:function(){
-                    console.log(id.value);
-                    console.log(pass.value);
+                    //console.log(id.value);
+                    //console.log(pass.value);
                     ifrm1.location.href="logincheck2.php?id="+id.value+"&pass="+pass.value; 
                 }
             }

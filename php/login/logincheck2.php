@@ -1,9 +1,7 @@
 
 <html>
   <head>
-    <?
-      session_start();
-    ?>
+
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <meta charset="utf-8">
   <script>
@@ -100,8 +98,12 @@
         }
         else  //로그인 성공
         {
-           $userid = $row["id"];
-           $_SESSION['userid'] = $userid;
+
+          
+          session_start();
+        
+           //$userid = $row["id"];
+           $_SESSION['userId'] = "$id";
           
            echo("
               <script>

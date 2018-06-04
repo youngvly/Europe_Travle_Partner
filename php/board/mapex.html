@@ -215,8 +215,11 @@
         },
 
       };
-
+      var geocoder;
       function initMap() {
+        geocoder = new google.maps.Geocoder();
+
+
         map = new google.maps.Map(document.getElementById('map'), {
           //zoom : 8,
           zoom: countries['cz'].zoom,
@@ -268,11 +271,57 @@
           map.panTo(latLng);
         };
       }
-      function setplacename(e) {
-        var c = document.getElementById('country');
-        c.value=e.place_id;
+      function setplacename(latLng) {
+        var c,r;
+        document.getElementById('showregion').value=latLng;
+        console.log(latLng);
+        geocoder.geocode( {'latLng': latLng},
+        function(results, status) {
+          if(status == google.maps.GeocoderStatus.OK) {
+            if(results[0]) {
+              for(var i = 0; i < results[0].address_components.length; i++) {
+                if((c = results[0].address_components[i].types[0]) == "country") {
+                  document.getElementById('showcountry').value = results[0].address_components[i].long_name;
+                }
+                if((c = results[0].address_components[i].types[0]) == "locality") {
+                  document.getElementById('showregion').value = results[0].address_components[i].long_name;
+                }
+              }
+            }
+            else {
+              alert("No results");
+            }
+          }
+          else {
+            alert("Status: " + status);
+          }
+        }
+    );
+         //document.getElementById('showcountry')=e.place_id;
         var r = document.getElementById('region');
       }
+
+      function getCountry(latLng) {
+    geocoder.geocode( {'latLng': latLng},
+      function(results, status) {
+        if(status == google.maps.GeocoderStatus.OK) {
+          if(results[0]) {
+            for(var i = 0; i < results[0].address_components.length; i++) {
+              if(results[0].address_components[i].types[0] == "country") {
+                alert(results[0].address_components[i].long_name);
+              }
+            }
+          }
+          else {
+            alert("No results");
+          }
+        }
+        else {
+          alert("Status: " + status);
+        }
+      }
+    );
+  }
       // When the user selects a city, get the place details for the city and
       // zoom the map in on the city.
       function onPlaceChanged() {
@@ -447,6 +496,8 @@
           document.getElementById('iw-website-row').style.display = 'none';
         }
       }
+
+      
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUxqeM58aJDQn7dRClt3BjXjxgZYkMd8Q&libraries=places&callback=initMap"
         async defer></script>
