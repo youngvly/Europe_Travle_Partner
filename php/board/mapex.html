@@ -290,6 +290,11 @@
                   document.getElementById('showregion').value = results[0].address_components[i].long_name;
                 }
               }
+              if((c = results[0].geometry.location.lat)) {
+                  //console.log(results[0].geometry.location.lat);
+                  document.getElementById('latlng').value = results[0].geometry.location;
+                }
+                
             }
             else {
               alert("No results");

@@ -60,11 +60,21 @@
         $number = $total_page-$start;
 
     ?>
-
+    <script>
+    //아이디 중복체크 함수
+    function child(table,boardID){
+        document.getElementById('ifrm').style.height='120%';
+        item.location.href="board_item.php?table="+table+"&boardID="+boardID; 
+        }
+    </script>
     </head>
     <body>
         <input type="hidden" id="page" value="<?=$page?>">
                     <!-- Main Content -->
+
+    <div class="container" id="item">
+    <iframe class="col-lg-8 col-md-10 mx-auto" src="" id="ifrm" scrolling=yes frameborder=no  height=0 name="item"></iframe>
+    </div>
     <div class="container">
     <div class="row">
     <div class="searching pull-right">
@@ -86,13 +96,16 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
         <p>
-          <? //게시판 목록출력
+          <? 
+
+          //게시판 목록출력
               for($i=$start;$i<$start+$scale & $i<$total_record; $i++){
                   mysql_data_seek($result,$i);      //레코드 지칭
                   $row = mysql_fetch_array($result);    //하나의 레코드 가져오기
                 $boardID = $row['boardID'];
                 echo('<div class="post-preview">');
-                echo("<a  data-toggle='collapse' href='#collapseExample$i' ");
+                //echo("<a  data-toggle='collapse' href='#collapseExample$i'");
+                echo("<a onclick=child('$table',$boardID) href='#ifrm' ");
                 echo (' role="button" aria-expanded="false" aria-controls="collapseExample"></br>');
                 //title
                 echo('<h2 class="post-title">');
@@ -112,83 +125,13 @@
                 echo("$namerow[0]</a>  $row[reg_date]</p>");
                 echo('</a></div>');
               ?>
-              <!--게시판 글,댓글출력-->
-                <div class='collapse' id='collapseExample<?=$i?>'>
-                    <div class='card card-body'>  
+              <!-- <div class='collapse' id='collapseExample<?=$i?>'></div>
+                <script>
+                    $(document).ready(function(){
+                        $("#collapseExample<?=$i?>").load("board_item.php?table=<?=$table?>&boardID=<?=$boardID?>");
+                    });
                     
-                    <table>
-                    <tr><td text-align='right'>조회수 :<?= $row['hits']?></td></tr>
-                    <tr id ="map"></tr>
-                    <tr><td colspan='3' height='200px'><?=$row['contents']?></td></tr>
-                    </table>
-
-                    <?=
-                    //덧글 East_Partner_ripple 출력
-                    $boardID = $row['boardID'];
-                        $psql = "SELECT * from $table";
-                        $psql .= "_ripple where boardID IN ('$boardID')";
-                        $presult = mysql_query($psql,$connect);
-          
-                        while($prow = mysql_fetch_array($presult)){
-                          //userID , name 연동
-                          $sql = "SELECT name,id FROM user WHERE id IN ('$prow[userID]')";
-                          $nameSQL = mysql_query($sql);
-                          if(!$nameSQL) echo"sql error";
-                          $namerow = mysql_fetch_array($nameSQL);
-                    ?>
-                    <div class = "container">
-                      <div class="row">
-                      <div class="col-sm-2">
-                        <div class="thumbnail">
-                          <img style="max-height: 100%; max-width: 100%;margin:auto;display:block;object-fit:contain" class="" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png" >
-                        </div><!-- /thumbnail-->
-                      </div><!-- /col-sm-1 -->
-
-                      <div class="col-sm-9">
-                        <div class="panel panel-default">
-                          <div class="panel-heading">
-                            <strong><?=$namerow[0]?></strong> <span class="text-muted"><?=$prow['reg_date']?></span>
-                          </div>
-                          <div class="panel-body">
-                            <?=$prow['contents']?>
-                          </div><!-- /panel-body -->
-                        </div><!-- /panel panel-default -->
-                      </div><!-- /col-sm-5 -->
-                      </div>
-                    </div><!-- /container of 댓글출력-->
-                        <?
-                          }   //ripple while close
-                        ?>
-                    <!--댓글 입력창 -->
-                    <div class = "container">
-                    <div class="row">
-                      <div class="col-sm-1">
-                        <!-- <div class="thumbnail">
-                          <img style="max-height: 100%; max-width: 100%;margin:auto;display:block;object-fit:contain" class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                        </div><!-- /thumbnail --> 
-                      </div><!-- /col-sm-1 -->
-                    <form name="RippleInput" id="rippleinputForm" action ="../board/insert_ripple.php" method="post" novalidate>
-                      <div class="col-sm-">
-                        <input type="hidden" name="boardID" value="<?=$row['boardID']?>">
-                        <input type="hidden" name="where" value="east">
-                        <div class="control-group">
-                          <div class="form-group floating-label-form-group controls">
-                            <label>댓글입력</label>
-                            <input type="text" class="form-control" placeholder="댓글을 입력하세요" 
-                              name="ripple_content" required data-validation-required-message="Please enter ripple">
-                            <!-- <p class="help-block text-danger"></p> -->
-                          </div>
-                        </div><!-- /control-group -->
-                      </div><!-- /col-sm-5 -->
-                      <div class="col-sm-2 pull-right">
-                      <button type="submit" class="btn btn-secondary" id="RippleButton">Enter</button>
-                      </div>
-                    </form>
-                    </div> <!-- row -->
-                    </div><!-- /container of 댓글입력-->
-
-                    </div><!-- /게시판 글출력 close-->
-                </div>
+                </script> -->
               <?}?> <!--게시판 출력 close-->
 
           <!-- Pager -->
@@ -209,19 +152,14 @@
      
     </div><!-- /container of main-->
 
-        <!-- Bootstrap core JavaScript -->
-        <script>
-    $(document).ready(function(){
+    <!-- Bootstrap core JavaScript -->
 
-        $("#map").load("showmap.html");
-
-    });
-
-</script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="../../js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom scripts for this template -->
     <script src="../../js/clean-blog.min.js"></script>
+
+
     </body>
 </html>

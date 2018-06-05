@@ -65,6 +65,9 @@
         });
 
       </script>
+     <div class="clearfix">
+            <a class="btn btn-primary float-right" href="board_write.php">글쓰기 &rarr;</a>
+      </div>       
 
 
  <!-- Footer -->

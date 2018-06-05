@@ -2,6 +2,7 @@
     session_start();
     
     EXTRACT($_POST);
+    EXTRACT($_GET);
     EXTRACT($_SESSION);
 ?>
 <meta charset="utf-8">
@@ -30,8 +31,10 @@
 
     $app_date = date("$date $time:00");
     //글 삽입 명령
-    $sql="insert into $boardname (userID,subject,country,region,requiredPeople,engagedPeople,title,contents,app_date,latlng) 
-        values('$userId','$subject','$country','$region','$requiredPeople','$engagedPeople','$title','$content','$app_date','$latlng')";
+    $sql="update $boardname SET subject='$subject',country='$country',region='$region',
+    requiredPeople=$requiredPeople,engagedPeople=$engagedPeople,title='$title',contents='$content',app_date='$app_date',latlng='$latlng'
+    WHERE boardID = $boardID";
+
     //echo($sql);
      $result = mysql_query($sql,$connect) or exit(mysql_error());
 

@@ -39,6 +39,7 @@
     <? 
           session_start();
           extract($_SESSION);
+          extract($_GET);
           
             if(!$userId){
                 echo("
@@ -51,10 +52,9 @@
                 exit;
             };
     ?>
-    <script>console.log(<?=$userId?>);</script>
 </head>
 <body>
-
+   
     <div id = "map"></div>
      <div id="findhotels">
      
@@ -81,51 +81,58 @@
     </div>
     
         <table class="table table-bordered">
-        <thead>
-            <caption> 글쓰기 </caption>
-        </thead>
+
         <tbody>
+            <?
+            if($mode !='edit') echo('<form action="insert_write.php" method="post" >');
+            else echo("<form action='edit_write.php?boardID=$boardID' method='post' >");
+            ?>
             <form action="insert_write.php" method="post" >
                 <input type="hidden" name="where" value="east">
                 <tr>
                     <th>국가 지역</th>
                     <td><input type="text" readonly name="country" id="showcountry">&nbsp; &nbsp;
-                    <input type="text" readonly name="region" id="showregion"></td>
-                    <input type="hidden" id="latlng" value="">
+                    <input type="text" readonly name="region" id="showregion">
+                    <input type="hidden" id="latlng" name="latlng" value=""></td>
+                    
                 </tr>
                 <tr>
                     <th>주제 : </th>
                     <td>
-                    <select class="selectpicker" name="subject" title="주제를 골라주세요">
-                        <option>관광</option>
-                        <option>식사</option>
+                    <select class="selectpicker" id = "subject" name="subject" title="주제를 골라주세요">
+                        <option value="관광">관광</option>
+                        <option value="식사">식사</option>
                         <option>?</option>
                     </select>
                     </td>
                 </tr>
                 <tr>
                     <th>제목: </th>
-                    <td><input type="text" placeholder="제목을 입력하세요. " name="title" class="form-control"/></td>
+                    <td><input type="text" placeholder="제목을 입력하세요. " id="title" name="title" class="form-control"/></td>
                 </tr>
                 <tr>
                     <th>내용: </th>
-                    <td><textarea cols="10" placeholder="내용을 입력하세요. " name="content" class="form-control"></textarea></td>
+                    <td><textarea cols="10" placeholder="내용을 입력하세요. " id="content" name="content" class="form-control"></textarea></td>
                 </tr>
                 <tr>
                     <td>약속 날짜</td>
-                    <td><input type="date" name="date" class="form-control"></td>
+                    <td><input type="date" id="app_date" name="date" class="form-control"></td>
                     <td>약속 시간</td>
-                    <td><input type="time" name="time" class="form-control"></td>
+                    <td><input type="time" id="app_time" name="time" class="form-control"></td>
                 </tr>
                 <tr>
                     <th>인원 </th>
-                    <td><input type="text" placeholder="현재인원" name="engagedPeople" length="4"/> &nbsp; &nbsp;
-                    <input type="text" placeholder="모집인원" name="requiredPeople"/></td>
+                    <td><input type="text" id="ep" placeholder="현재인원" name="engagedPeople" length="4"/> &nbsp; &nbsp;
+                    <input type="text" id="rp" placeholder="모집인원" name="requiredPeople"/></td>
                     
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="submit" value="등록" onclick="sendData()" class="pull-right"/>
+                        <?
+                        if($mode!= 'edit') echo('<input type="submit" value="등록" class="pull-right"/>');
+                        else echo('<input type="submit" value="수정" class="pull-right"/>');
+                        ?>
+                        
                         <input type="button" value="reset" class="pull-left"/>
                         <input type="button" value="글 목록으로... " class="pull-right" href="east_partner_board.php"/>
                         <!-- <a class="btn btn-default" onclick="sendData()"> 등록 </a>
@@ -139,12 +146,33 @@
         </div>
         </div>
     </div>
+     <!-- //controll edit mode -->
+     <?
+        if($mode == 'edit'){
+        include '../dbConnect.php';
+    
+        $sql = "SELECT * FROM $table"."_board WHERE boardID = $boardID";
+        $result = mysql_query($sql) or exit(mysql_error());
+        $row = mysql_fetch_array($result);
+        
+    ?>
+    <script>
+        document.getElementById('subject').value = '<?=$row['subject']?>';
+        document.getElementById('title').value = '<?=$row['title']?>';
+        document.getElementById('showcountry').value = '<?=$row['country']?>';
+        document.getElementById('showregion').value = '<?=$row['region']?>';
+        document.getElementById('content').value = '<?=$row['contents']?>';
+        document.getElementById('app_date').value = '<?=$row['app_date']?>'.substring(0,10);
+        document.getElementById('app_time').value = '<?=$row['app_date']?>'.substring(11,16);
+        document.getElementById('rp').value = '<?=$row['requiredPeople']?>';
+        document.getElementById('ep').value = '<?=$row['engagedPeople']?>';
+        document.getElementById('latlng').value = '<?=$row['latlng']?>';
+    </script>
+
+    <?}?>
     <script>
     $(document).ready(function(){
-
         $("#map").load("mapex.html");
-
     });
-
 </script>
 </body>
