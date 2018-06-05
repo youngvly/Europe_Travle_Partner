@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place Autocomplete Hotel Search</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      table {
+        font-size: 12px;
+      }
+      #map {
+        width: 440px;
+      }
+      #listing {
+        position: absolute;
+        width: 200px;
+        height: 470px;
+        overflow: auto;
+        left: 442px;
+        top: 0px;
+        cursor: pointer;
+        overflow-x: hidden;
+      }
+      #findhotels {
+        position: absolute;
+        text-align: right;
+        width: 100px;
+        font-size: 14px;
+        padding: 4px;
+        z-index: 5;
+        background-color: #fff;
+      }
+      #locationField {
+        position: absolute;
+        width: 190px;
+        height: 25px;
+        left: 108px;
+        top: 0px;
+        z-index: 5;
+        background-color: #fff;
+      }
+      #controls {
+        position: absolute;
+        left: 300px;
+        width: 140px;
+        top: 0px;
+        z-index: 5;
+        background-color: #fff;
+      }
+      #autocomplete {
+        width: 100%;
+      }
+      #country {
+        width: 100%;
+      }
+      .placeIcon {
+        width: 20px;
+        height: 34px;
+        margin: 4px;
+      }
+      .hotelIcon {
+        width: 24px;
+        height: 24px;
+      }
+      #resultsTable {
+        border-collapse: collapse;
+        width: 240px;
+      }
+      #rating {
+        font-size: 13px;
+        font-family: Arial Unicode MS;
+      }
+      .iw_table_row {
+        height: 18px;
+      }
+      .iw_attribute_name {
+        font-weight: bold;
+        text-align: right;
+      }
+      .iw_table_icon {
+        text-align: right;
+      }
+    </style>
+  </head>
+
+  <body>
+        <div id="map"></div>
+    </body>
+    <script>
+            // This example uses the autocomplete feature of the Google Places API.
+            // It allows the user to find all hotels in a given place, within a given
+            // country. It then displays markers for all the hotels returned,
+            // with on-click details for each hotel.
+      
+            // This example requires the Places library. Include the libraries=places
+            // parameter when you first load the API. For example:
+            // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+      
+            var map, places, infoWindow;
+            var markers = [];
+            var autocomplete;
+            var countryRestrict = {'country': 'cz'};
+            var MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
+            var hostnameRegexp = new RegExp('^https?://.+?/');
+
+             function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                //zoom : 8,
+                zoom: countries['cz'].zoom,
+                center: countries['cz'].center,
+                mapTypeControl: false,
+                panControl: false,
+                zoomControl: false,
+                streetViewControl: false,
+                
+                });  // Create the autocomplete object and associate it with the UI input control.
+                // Restrict the search to the default country, and to place type "cities".
+                autocomplete = new google.maps.places.Autocomplete(
+                    /** @type {!HTMLInputElement} */ (
+                        document.getElementById('autocomplete')), {
+                    types: ['(cities)'],
+                    componentRestrictions: countryRestrict
+                    });
+                places = new google.maps.places.PlacesService(map);
+
+                autocomplete.addListener('place_changed', onPlaceChanged);
+                    }
+    </script>
+</html>

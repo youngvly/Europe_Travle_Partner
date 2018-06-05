@@ -127,7 +127,7 @@
                     <td colspan="2">
                         <input type="submit" value="등록" onclick="sendData()" class="pull-right"/>
                         <input type="button" value="reset" class="pull-left"/>
-                        <input type="button" value="글 목록으로... " class="pull-right" href="east_partner_boot.php"/>
+                        <input type="button" value="글 목록으로... " class="pull-right" href="east_partner_board.php"/>
                         <!-- <a class="btn btn-default" onclick="sendData()"> 등록 </a>
                         <a class="btn btn-default" type="reset"> reset </a>
                         <a class="btn btn-default" onclick="javascript:location.href='list.jsp'">글 목록으로...</a> -->

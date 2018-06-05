@@ -19,100 +19,28 @@
 
     <!-- Custom fonts for this template -->
     <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../../css/clean-blog.min.css" rel="stylesheet">
     <link href="../../css/additional.css" rel="stylesheet">
-
     <? 
         //session_start()
           session_start();
           extract($_SESSION);
-          
-        //PHP DB Connect init
-        include "../dbConnect.php";
-        //east_partner_board 게시판출력
-        $sql = "SELECT boardID,country,region,subject,DATE_FORMAT(app_date,'%Y-%m-%d')DATEONLY ,title,userID
-                ,requiredPeople,engagedPeople,contents,hits,reg_date FROM east_partner_board ";
-        
-        $result = mysql_query($sql,$connect);
+          extract($_GET);
+          extract($_POST);
+
+          if(!$page) $page=1;
     ?>
   </head>
     <body>
+      <nav id="navv"></nav>
+       <script>
+        $(document).ready(function(){
 
-         <!-- Navigation -->
-         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand" href="../../main_boot.php">유럽여행 동행찾기</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="fa fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../../main_boot.php">Home</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                EAST(동)
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">REVIEW</a>
-                <a class="dropdown-item" href="../../php/board/east_partner_board.php">PARTNER</a>
-<!--                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a> -->
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                WEST(서)
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">REVIEW</a>
-                <a class="dropdown-item" href="../../php/board/west_partner_board.php">PARTNER</a>
-<!--                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a> -->
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                NORTH(북)
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">REVIEW</a>
-                <a class="dropdown-item" href="../../php/board/north_partner_board.php">PARTNER</a>
-<!--                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a> -->
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                SOUTH(남)
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">REVIEW</a>
-                <a class="dropdown-item" href="../../php/board/south_partner_board.php">PARTNER</a>
+            $("#navv").load("../../nav.php");
 
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
-            </li>
-            <li class="nav-item">
-            <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
-            <?
-              if(!$userId) echo('<a class="nav-link" href="PHP/login/login.php">LOGIN</a>');
-              else echo('<a class="nav-link" href="PHP/login/logout.php">LOGOUT</a>');
-            ?>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+        });
+      </script>
     
      <!-- Page Header -->
      <header class="masthead" style="background-image: url('../../img/east-bg.jpg')">
@@ -128,116 +56,17 @@
         </div>
       </div>
     </header>
-            <!-- Main Content -->
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-        <p>
-          <? //게시판 목록출력
-              $i=0;
-              while($row = mysql_fetch_array($result)){
-                $i +=1;
-                echo('<div class="post-preview">');
-                echo("<a onclick='$click=$row[boardID]' data-toggle='collapse' href='#collapseExample$i' ");
-                echo (' role="button" aria-expanded="false" aria-controls="collapseExample"></br>');
-                //title
-                echo('<h2 class="post-title">');
-                echo("$row[title]");
-                echo("</h2>");
-                //subtitle
-                echo('<h3 class="post-subtitle">');
-                echo("$row[country] / $row[region] / $row[subject] / 희망 날짜 $row[4]");
-                echo('</h3>');
-                //username을 출력하기 위해 user DB와 연동 
-                $sql = "SELECT name,id FROM user WHERE id IN ('$row[userID]')";
-                $nameSQL = mysql_query($sql)or exit(mysql_error());
-                if(!$nameSQL) echo"sql error";
-                $namerow = mysql_fetch_array($nameSQL);
+    <div id = "mainboard"></div>
+    <script>
 
-                echo('<p class="post-meta">Posted by <a href="#"> ');
-                echo("$namerow[0]</a>  $row[reg_date]</p>");
-                echo('</a></div>');
-              ?>
-              <!--게시판 글,댓글출력-->
-                <div class='collapse' id='collapseExample<?=$i?>'>
-                    <div class='card card-body'>  
-                                
-                    <table>
-                    <tr><td text-align='right'>조회수 :<?= $row['hits']?></td></tr>
-                    <tr><td colspan='3' height='200px'><?=$row['contents']?></td></tr>
-                    </table>
+        $(document).ready(function(){
+            $("#mainboard").load("../board/board_frame.php?table=east_partner&page=<?=$page?>&mode=<?=$mode?>&searchCountry=<?=$searchCountry?>&searchregion=<?$searchregion?>&searchdate=<?$searchdate?>&searchsubject=<?$searchsubject?>");
 
-                    <?
-                    //덧글 East_Partner_ripple 출력
-                        $psql = "SELECT * from east_partner_ripple where boardID IN ('$row[boardID]')";
-                        $presult = mysql_query($psql,$connect);
-          
-                        while($prow = mysql_fetch_array($presult)){
-                          //userID , name 연동
-                          $sql = "SELECT name,id FROM user WHERE id IN ('$prow[userID]')";
-                          $nameSQL = mysql_query($sql);
-                          if(!$nameSQL) echo"sql error";
-                          $namerow = mysql_fetch_array($nameSQL);
-                    ?>
-                    <div class = "container">
-                      <div class="col-sm-1">
-                        <div class="thumbnail">
-                          <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                        </div><!-- /thumbnail -->
-                      </div><!-- /col-sm-1 -->
+        });
 
-                      <div class="col-sm-5">
-                        <div class="panel panel-default">
-                          <div class="panel-heading">
-                            <strong><?=$namerow[0]?></strong> <span class="text-muted"><?=$prow['reg_date']?></span>
-                          </div>
-                          <div class="panel-body">
-                            <?=$prow['contents']?>
-                          </div><!-- /panel-body -->
-                        </div><!-- /panel panel-default -->
-                      </div><!-- /col-sm-5 -->
-                    </div><!-- /container of 댓글출력-->
-                        <?
-                          }   //ripple while close
-                        ?>
-                    <!--댓글 입력창 -->
-                    <div class = "container">
-                      <div class="col-sm-1">
-                        <div class="thumbnail">
-                          <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                        </div><!-- /thumbnail -->
-                      </div><!-- /col-sm-1 -->
-                    <form name="RippleInput" id="rippleinputForm" action ="../board/insert_ripple.php" method="post" novalidate>
-                      <div class="col-sm-5">
-                        <input type="hidden" name="boardID" value="<?=$row[boardID]?>">
-                        <div class="control-group">
-                          <div class="form-group floating-label-form-group controls">
-                            <label>댓글입력</label>
-                            <input type="text" class="form-control" placeholder="댓글을 입력하세요" 
-                              name="ripple_content" required data-validation-required-message="Please enter your name.">
-                            <p class="help-block text-danger"></p>
-                          </div>
-                        </div><!-- /control-group -->
-                      </div><!-- /col-sm-5 -->
-                      <button type="submit" class="btn btn-secondary" id="RippleButton">Enter</button>
-                    </form>
-                    </div><!-- /container of 댓글입력-->
+      </script>
 
-                    </div><!-- /게시판 글출력 close-->
-                </div>
-              <?}?> <!--게시판 출력 close-->
 
-          <!-- Pager -->
-          <div class="clearfix">
-            <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
-          </div>
-                  
-          <div class="clearfix">
-            <a class="btn btn-primary float-right" href="board_write.php">글쓰기 &rarr;</a>
-          </div>        
-        </div>
-      </div><!-- /row of main-->
-    </div><!-- /container of main-->
  <!-- Footer -->
  <footer>
       <div class="container">

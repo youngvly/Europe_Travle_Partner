@@ -16,7 +16,6 @@
         ");
         exit;
     };
-
     if(!$ripple_content) {
         echo("
             <script>
@@ -27,18 +26,18 @@
         exit;
     }
 
-    include "php/dbConnect.php";
+    
+    if("$where" == "east") $boardname="east_partner_ripple";
+    if("$where" == "west") $boardname="west_partner_ripple";
+    if("$where" == "south") $boardname="south_partner_ripple";
+    if("$where" == "north") $boardname="north_partner_ripple";
 
-    $sql = "select * from user where userID='$userID'";
-    $result = mysql_query($sql,$connect);
-    $row = mysql_fetch_array($result);
-
+    include "../../php/dbConnect.php";
     //덧글 삽입 명령
-    $sql="insert into east_partner_ripple(boardID,userID,contents) values($boardID,$userID,$ripple_content)";
-    $result = mysql_query($sql,$connect);
-
+    $sql="insert into $boardname(boardID,userID,contents) values($boardID,'$userId','$ripple_content')";
+    echo($sql);
+    $result = mysql_query($sql,$connect)or exit(mysql_error());
     mysql_close();
-
     echo("
         <script>
             history.go(-1);
