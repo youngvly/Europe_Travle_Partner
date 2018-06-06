@@ -127,7 +127,10 @@
             <form name="RippleInput" id="rippleinputForm" action ="../board/insert_ripple.php" method="post" novalidate>
                 <div class="col-sm-">
                 <input type="hidden" name="boardID" value="<?=$row['boardID']?>">
-                <input type="hidden" name="where" value="east">
+                <?
+                 $where = split('_',$table);
+                ?>
+                <input type="hidden" name="where" value="<?=$where[0]?>">
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                     <label>댓글입력</label>

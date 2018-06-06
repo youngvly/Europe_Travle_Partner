@@ -5,11 +5,11 @@ extract($_POST);
     include '../dbConnect.php';
       $birthEx = explode('-',"$bday");
    // $age = (int)date("Y")-(int)$birthEx[0] +1; 
-    $hashed = password_hash("$password2",PASSWORD_BCRYPT);
-    $phone = "$phone1"+'-'+"$phone2"+'-'+"$phone3";
+    $hashed = password_hash("$password",PASSWORD_BCRYPT);
+    $phone = "$phone1".'-'."$phone2".'-'."$phone3";
     //user 테이블에 기본정보 삽입
     $sql = "insert user (id,pass,name,age,gender,address,tel,email,intro)
-        values('$id','$hashed','$name',$birthEx[0],'$gender[0]','$address',$phone,'$email','$intro')";
+        values('$id','$hashed','$name',$birthEx[0],'$gender[0]','$address','$phone','$email','$intro')";
     $result = mysql_query($sql) or exit(mysql_error());
     
     //traveltype테이블에 여행취향 데이터 삽입

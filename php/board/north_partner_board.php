@@ -43,14 +43,14 @@
       </script>
     
      <!-- Page Header -->
-     <header class="masthead" style="background-image: url('../../img/east-bg.jpg')">
+     <header class="masthead" style="background-image: url('../../img/north-bg.jpg')">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="site-heading">
-              <h1>EAST EUROPE</h1>
-              <span class="subheading">동유럽 여행 동행 게시판</span>
+              <h1>NORTH EUROPE</h1>
+              <span class="subheading">북유럽 여행 동행 게시판</span>
             </div>
           </div>
         </div>
@@ -60,13 +60,13 @@
     <script>
 
         $(document).ready(function(){
-            $("#mainboard").load("../board/board_frame.php?table=east_partner&page=<?=$page?>&mode=<?=$mode?>&searchCountry=<?=$searchCountry?>&searchregion=<?$searchregion?>&searchdate=<?$searchdate?>&searchsubject=<?$searchsubject?>");
+            $("#mainboard").load("../board/board_frame.php?table=north_partner&page=<?=$page?>&mode=<?=$mode?>&searchCountry=<?=$searchCountry?>&searchregion=<?$searchregion?>&searchdate=<?$searchdate?>&searchsubject=<?$searchsubject?>");
 
         });
 
       </script> 
      <div class="clearfix col-lg-8 col-md-10 mx-auto">
-            <a class="btn btn-primary float-right" href="board_write.php?table=east_partner">글쓰기 &rarr;</a>
+            <a class="btn btn-primary float-right" href="board_write.php?table=north_partner">글쓰기 &rarr;</a>
       </div>       
 
 

@@ -41,7 +41,7 @@ extract($_POST);
     echo'
         <script>
             alert("회원정보 수정완료");
-           // location.href ="../../main_boot.php";
+            location.href ="../../main_boot.php";
         </script>
         ';
     mysql_close();

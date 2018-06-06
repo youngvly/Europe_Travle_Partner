@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>Clean Blog - Start Bootstrap Theme</title>
-
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -35,7 +35,14 @@
 
   </head>
   <body>
-  
+<!--   <nav id="navv"></nav>
+       <script>
+        $(document).ready(function(){
+
+            $("#navv").load("../../nav.php");
+
+        });
+      </script> -->
   <div class="container">
             <form class="form-horizontal" role="form"  action="edit_profile_action.php" method="post">
                 <center><h2> ◎ 정보 수정 ◎ </h2></center>
@@ -190,7 +197,7 @@
                     <div class="col-sm-6 col-sm-offset-3">
                       <div class="row">
                             <div class="col-sm-4">
-                              <button type="button" value="delete" class="btn btn-primary btn-block">회원탈퇴</button>
+                              <button type="button" id="outbt" value="delete" class="btn btn-primary btn-block">회원탈퇴</button>
                             </div>
                             <div class="col-sm-4">
                               <button type="cancel" value="Cancel" onclick="history.back();" class="btn btn-primary btn-block">취소</button>
@@ -291,6 +298,26 @@
             var pw = document.getElementById('pw').value;
             ifrm1.location.href="pw_check.php?pw="+pw; 
         }
+
+        var bt3 = document.getElementById("outbt");
+        bt3.addEventListener("click",deluser); 
+        
+        function deluser(){
+            var ckpw = document.getElementById('ckpw').value;
+            var pw = document.getElementsByName('password2');
+            if(ckpw=="0"){
+                alert("기존 비밀번호를 확인해주세요.");
+            }
+            else {
+                if(confirm("회원탈퇴를 진행하시겠습니까?")){
+                    location.href="delete_user.php"; 
+                }else{
+                    alert("아니오를 누르셨습니다.");
+                }
+            }
+           
+        }
+
         var bt = document.getElementById("submitbt");
         bt.addEventListener("click",ispwchecked); 
         function ispwchecked(){

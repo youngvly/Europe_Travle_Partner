@@ -54,7 +54,14 @@
     ?>
 </head>
 <body>
-   
+    <nav id="navv"></nav>
+       <script>
+        $(document).ready(function(){
+
+            $("#navv").load("../../nav.php");
+
+        });
+      </script>
     <div id = "map"></div>
      <div id="findhotels">
      
@@ -86,9 +93,10 @@
             <?
             if($mode !='edit') echo('<form action="insert_write.php" method="post" >');
             else echo("<form action='edit_write.php?boardID=$boardID' method='post' >");
+            $where = split('_',$table);
             ?>
             <form action="insert_write.php" method="post" >
-                <input type="hidden" name="where" value="east">
+                <input type="hidden" name="where" value="<?=$where[0]?>">
                 <tr>
                     <th>국가 지역</th>
                     <td><input type="text" readonly name="country" id="showcountry">&nbsp; &nbsp;
@@ -134,7 +142,7 @@
                         ?>
                         
                         <input type="button" value="reset" class="pull-left"/>
-                        <input type="button" value="글 목록으로... " class="pull-right" href="east_partner_board.php"/>
+                        <input type="button" value="글 목록으로... " class="pull-right" href="<?=$where[0]?>_partner_board.php"/>
                         <!-- <a class="btn btn-default" onclick="sendData()"> 등록 </a>
                         <a class="btn btn-default" type="reset"> reset </a>
                         <a class="btn btn-default" onclick="javascript:location.href='list.jsp'">글 목록으로...</a> -->

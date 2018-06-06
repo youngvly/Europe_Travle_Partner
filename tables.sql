@@ -33,7 +33,6 @@ create table if not exists travelType(
 
 create table if not exists  East_Review_Board (
     boardID int not null AUTO_INCREMENT PRIMARY KEY,
-    board_pid int(10) DEFAULT 0 comment '원글번호',
     userID varchar(15) not null ,
     FOREIGN KEY (userID) REFERENCES user(id),
     subject varchar(10) comment '머릿말' not null,   /*숙소 맛집 기타*/
@@ -43,13 +42,11 @@ create table if not exists  East_Review_Board (
     star int comment '별점',
     contents text NOT NULL comment '게시글 내용',
     hits int (10) NOT NULL DEFAULT 0 COMMENT '조회수',
-    reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
-    INDEX board_pid(board_pid)
+    reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일'
 );
 
 create table if not exists East_Partner_Board (
     boardID int not null AUTO_INCREMENT PRIMARY KEY,
-    board_pid int(10) DEFAULT 0 comment '원글번호',
     userID varchar(15) not null ,
     subject varchar(10) comment '머릿말',   --
     country varchar(20) comment '국가' not null,
@@ -60,8 +57,59 @@ create table if not exists East_Partner_Board (
     contents text NOT NULL comment '게시글 내용',
     hits int (10) NOT NULL DEFAULT 0 COMMENT '조회수',
     reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
-    reg_date datetime  COMMENT '약속일',   
-    INDEX board_pid(board_pid),
+    app_date datetime  COMMENT '약속일',   
+    latlng varchar(50) COMMENT '구글지도 위도경도',
+    FOREIGN KEY (userID) REFERENCES user(id)
+);
+
+create table if not exists WEST_Partner_Board (
+    boardID int not null AUTO_INCREMENT PRIMARY KEY,
+    userID varchar(15) not null ,
+    subject varchar(10) comment '머릿말',   --
+    country varchar(20) comment '국가' not null,
+    region varchar(20) comment '지역' not null,
+    requiredPeople int comment '예상 필요인원',
+    engagedPeople int comment '현재 참가인원',
+    title varchar(50) NOT NULL comment '게시글 제목',
+    contents text NOT NULL comment '게시글 내용',
+    hits int (10) NOT NULL DEFAULT 0 COMMENT '조회수',
+    reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
+    app_date datetime  COMMENT '약속일',   
+    latlng varchar(50) COMMENT '구글지도 위도경도',
+    FOREIGN KEY (userID) REFERENCES user(id)
+);
+
+create table if not exists NORTH_Partner_Board (
+    boardID int not null AUTO_INCREMENT PRIMARY KEY,
+    userID varchar(15) not null ,
+    subject varchar(10) comment '머릿말',   --
+    country varchar(20) comment '국가' not null,
+    region varchar(20) comment '지역' not null,
+    requiredPeople int comment '예상 필요인원',
+    engagedPeople int comment '현재 참가인원',
+    title varchar(50) NOT NULL comment '게시글 제목',
+    contents text NOT NULL comment '게시글 내용',
+    hits int (10) NOT NULL DEFAULT 0 COMMENT '조회수',
+    reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
+    app_date datetime  COMMENT '약속일',   
+    latlng varchar(50) COMMENT '구글지도 위도경도',
+    FOREIGN KEY (userID) REFERENCES user(id)
+);
+
+create table if not exists SOUTH_Partner_Board (
+    boardID int not null AUTO_INCREMENT PRIMARY KEY,
+    userID varchar(15) not null ,
+    subject varchar(10) comment '머릿말',   --
+    country varchar(20) comment '국가' not null,
+    region varchar(20) comment '지역' not null,
+    requiredPeople int comment '예상 필요인원',
+    engagedPeople int comment '현재 참가인원',
+    title varchar(50) NOT NULL comment '게시글 제목',
+    contents text NOT NULL comment '게시글 내용',
+    hits int (10) NOT NULL DEFAULT 0 COMMENT '조회수',
+    reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '등록일',
+    app_date datetime  COMMENT '약속일',   
+    latlng varchar(50) COMMENT '구글지도 위도경도',
     FOREIGN KEY (userID) REFERENCES user(id)
 );
 
@@ -73,4 +121,31 @@ create table if not exists East_Partner_Ripple (
     reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP comment '등록일',
     FOREIGN KEY (userID) REFERENCES user(id),
     FOREIGN KEY (boardID) REFERENCES East_Partner_Board(boardID)
-)
+);
+create table if not exists WEST_Partner_Ripple (
+    ripID int not null AUTO_INCREMENT primary key,
+    boardID int not null comment '메인글의 일련번호',
+    userID varchar(15) not null,
+    contents text NOT NULL,
+    reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP comment '등록일',
+    FOREIGN KEY (userID) REFERENCES user(id),
+    FOREIGN KEY (boardID) REFERENCES East_Partner_Board(boardID)
+);
+create table if not exists SOUTH_Partner_Ripple (
+    ripID int not null AUTO_INCREMENT primary key,
+    boardID int not null comment '메인글의 일련번호',
+    userID varchar(15) not null,
+    contents text NOT NULL,
+    reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP comment '등록일',
+    FOREIGN KEY (userID) REFERENCES user(id),
+    FOREIGN KEY (boardID) REFERENCES East_Partner_Board(boardID)
+);
+create table if not exists NORTH_Partner_Ripple (
+    ripID int not null AUTO_INCREMENT primary key,
+    boardID int not null comment '메인글의 일련번호',
+    userID varchar(15) not null,
+    contents text NOT NULL,
+    reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP comment '등록일',
+    FOREIGN KEY (userID) REFERENCES user(id),
+    FOREIGN KEY (boardID) REFERENCES East_Partner_Board(boardID)
+);
