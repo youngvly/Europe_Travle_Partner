@@ -1,3 +1,5 @@
+create database EUROPE_TRAVEL_PARTNER;
+
 USE EUROPE_TRAVEL_PARTNER;
 
 create table if not exists user (

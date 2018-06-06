@@ -76,34 +76,36 @@
       </div>
     </header>
 
+    <div class="col-lg-8 col-md-10 mx-auto px-10">
+        <div id = "mainboard"></div>
+        <div id = "map" class="mx-auto "></div>
+        <div id="findhotels">
+        
+        </div>
+        <div class="row col-lg-5 col-md-10 mx-auto py-3">
+            <div id="locationField">
+            <input class="form-control"id="autocomplete" placeholder="Enter a city" type="text" />
+            </div>
 
-    <div id = "mainboard"></div>
-    <div id = "map"></div>
-     <div id="findhotels">
-     
+            <div id="controls">
+            <select id="country"class="form-control">
+                    <option value="all">All</option>
+                    <option value="ru">러시아</option>
+                    <option value="fr">조지아</option>
+                    <option value="pl">폴란드</option>
+                    <option value="cs" selected>체코</option>
+                    <option value="nz">슬로바키아</option>
+                    <option value="si">슬로베니아</option>
+                    <option value="hu">헝가리</option>
+                    <option value="ro">루마니아</option>
+                    <option value="hr">크로아티아</option>
+                    <option value="bg" >불가리아</option>
+            </select>
+            </div>
+        </div>
     </div>
-
-    <div id="locationField">
-      <input id="autocomplete" placeholder="Enter a city" type="text" />
-    </div>
-
-    <div id="controls">
-    <select id="country">
-            <option value="all">All</option>
-            <option value="ru">러시아</option>
-            <option value="fr">조지아</option>
-            <option value="pl">폴란드</option>
-            <option value="cs" selected>체코</option>
-            <option value="nz">슬로바키아</option>
-            <option value="si">슬로베니아</option>
-            <option value="hu">헝가리</option>
-            <option value="ro">루마니아</option>
-            <option value="hr">크로아티아</option>
-            <option value="bg" >불가리아</option>
-    </select>
-    </div>
-    
-        <table class="table table-bordered">
+    <div class="col-lg-8 col-md-10 mx-auto px-10">
+        <table class="table table-bordered ">
 
         <tbody>
             <?
@@ -115,15 +117,15 @@
                 <input type="hidden" name="where" value="<?=$where[0]?>">
                 <tr>
                     <th>국가 지역</th>
-                    <td><input type="text" readonly name="country" id="showcountry">&nbsp; &nbsp;
-                    <input type="text" readonly name="region" id="showregion">
+                    <td><input class="form-control"type="text" readonly name="country" id="showcountry">&nbsp; &nbsp;
+                    <input class="form-control"type="text" readonly name="region" id="showregion">
                     <input type="hidden" id="latlng" name="latlng" value=""></td>
                     
                 </tr>
                 <tr>
                     <th>주제 : </th>
                     <td>
-                    <select class="selectpicker" id = "subject" name="subject" title="주제를 골라주세요">
+                    <select class="form-control selectpicker" id = "subject" name="subject" title="주제를 골라주세요">
                         <option value="관광">관광</option>
                         <option value="식사">식사</option>
                         <option>?</option>
@@ -139,26 +141,25 @@
                     <td><textarea cols="10" placeholder="내용을 입력하세요. " id="content" name="content" class="form-control"></textarea></td>
                 </tr>
                 <tr>
-                    <td>약속 날짜</td>
-                    <td><input type="date" id="app_date" name="date" class="form-control"></td>
-                    <td>약속 시간</td>
-                    <td><input type="time" id="app_time" name="time" class="form-control"></td>
+                    <th>약속 날짜 및 시간</th>
+                    <td><input type="date" id="app_date" name="date" class="form-control">
+                    <input type="time" id="app_time" name="time" class="form-control"></td>
                 </tr>
                 <tr>
                     <th>인원 </th>
-                    <td><input type="text" id="ep" placeholder="현재인원" name="engagedPeople" length="4"/> &nbsp; &nbsp;
-                    <input type="text" id="rp" placeholder="모집인원" name="requiredPeople"/></td>
+                    <td><input class="form-control"type="text" id="ep" placeholder="현재인원" name="engagedPeople" length="4"/> &nbsp; &nbsp;
+                    <input class="form-control"type="text" id="rp" placeholder="모집인원" name="requiredPeople"/></td>
                     
                 </tr>
                 <tr>
                     <td colspan="2">
                         <?
-                        if($mode!= 'edit') echo('<input type="submit" value="등록" class="pull-right"/>');
-                        else echo('<input type="submit" value="수정" class="pull-right"/>');
+                        if($mode!= 'edit') echo('<input class="btn btn-primary float-right"type="submit" value="등록" class="pull-right"/>');
+                        else echo('<input class="btn btn-primary float-right" type="submit" value="수정" class="pull-right"/>');
                         ?>
                         
-                        <input type="button" value="reset" class="pull-left"/>
-                        <input type="button" value="글 목록으로... " class="pull-right" href="<?=$where[0]?>_partner_board.php"/>
+                        <input class="btn btn-primary float-right"type="button" value="reset" class="pull-left"/>
+                        <input class="btn btn-primary float-right"type="button" value="글 목록으로... " class="pull-right" href="<?=$where[0]?>_partner_board.php"/>
                         <!-- <a class="btn btn-default" onclick="sendData()"> 등록 </a>
                         <a class="btn btn-default" type="reset"> reset </a>
                         <a class="btn btn-default" onclick="javascript:location.href='list.jsp'">글 목록으로...</a> -->
@@ -167,6 +168,7 @@
             </form>
         </tbody>
         </table>
+        </div><!--px-->
         </div>
         </div>
     </div>
