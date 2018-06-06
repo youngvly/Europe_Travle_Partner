@@ -27,6 +27,7 @@
     <!-- Custom styles for this template -->
     <link href="css/clean-blog.min.css" rel="stylesheet">
     <link href="css/additional.css" rel="stylesheet">
+    <link href="css/hover.css" rel="stylesheet">
     
 
   </head>
@@ -55,70 +56,49 @@
         </div>
       </div>
     </header>
-    <!--East Menu-->
-    <div class="mainmenu" style="background-image: url('img/east-bg.jpg')">
-    <div class="overlay"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="mainmenu2">
 
-
-
-              <a class="subheading" href='php/board/east_partner_board.php' role="button" aria-controls= "true" >
-              <center><h1>East</h1>동유럽</a></center>
-
-            </div><!--site-heading-->
-          </div><!--row-->
-        </div><!--/container-->
-      </div><!--overlay-->
-    </div><!--mainmenu-->
-    <!--WestMenu-->
-    <div class="mainmenu" style="background-image: url('img/west-bg.jpg')">
-    <div class="overlay"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="mainmenu2">
-
-              <a class="subheading" href='php/board/west_partner_boot.php' role="button" aria-controls= "true" >
-              <center><h1>West</h1>서유럽</a></center>
-            </div><!--site-heading-->
-          </div><!--row-->
-        </div><!--/container-->
-      </div><!--overlay-->
-    </div><!--mainmenu-->
-    <!--NorthMenu-->
-    <div class="mainmenu" style="background-image: url('img/north-bg.jpg')">
-    <div class="overlay"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="mainmenu2">
-
-              <a class="subheading" href='php/board/North_partner_boot.php' role="button" aria-controls= "true" >
-              <center><h1>North</h1>북유럽</a></center>
-            </div><!--site-heading-->
-          </div><!--row-->
-        </div><!--/container-->
-      </div><!--overlay-->
-    </div><!--mainmenu-->
-
-    <!--SouthMenu-->
-    <div class="mainmenu" style="background-image: url('img/south-bg.jpg')">
-    <div class="overlay"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="mainmenu2">
-
-              <a class="subheading" href='php/board/South_partner_boot.php' role="button" aria-controls= "true" >
-              <center><h1>South</h1>남유럽</a></center>
-            </div><!--site-heading-->
-          </div><!--row-->
-        </div><!--/container-->
-      </div><!--overlay-->
-    </div><!--mainmenu-->
+    
+	<div class="grid">
+					<figure class="effect-layla">
+						<img src="img/east-bg.jpg" />
+						<figcaption>
+							<h2><span>EAST</span> EURPOPE</h2>
+							<p>동유럽여행 파트너를 찾아보세요</p>
+							<a href="php/board/east_partner_board.php">View more</a>
+						</figcaption>			
+          </figure>
+    </div>
+    <div class="grid">
+					<figure class="effect-layla">
+						<img src="img/west-bg.jpg" />
+            <figcaption>
+							<h2><span>WEST</span> EURPOPE</h2>
+							<p>서유럽여행 파트너를 찾아보세요</p>
+							<a href="php/board/WEST_partner_board.php">View more</a>
+						</figcaption>					
+          </figure>
+    </div>
+    <div class="grid">
+					<figure class="effect-layla">
+						<img src="img/south-bg.jpg" />
+						<figcaption>
+							<h2><span>SOUTH</span> EURPOPE</h2>
+							<p>남유럽여행 파트너를 찾아보세요</p>
+							<a href="php/board/SOUTH_partner_board.php">View more</a>
+						</figcaption>			
+          </figure>
+    </div>
+    <div class="grid">
+					<figure class="effect-layla">
+						<img src="img/north-bg.jpg" />
+            <figcaption>
+							<h2><span>NORTH</span> EURPOPE</h2>
+							<p>북유럽여행 파트너를 찾아보세요</p>
+							<a href="php/board/NORTH_partner_board.php">View more</a>
+						</figcaption>					
+          </figure>
+    </div>
+ 
  
     <nav id="foot"></nav>
        <script>

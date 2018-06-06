@@ -28,31 +28,3 @@
 	border-width:8px;
 }
 
-
-
-/*main menu css*/
-.mainmenu{
-    margin-bottom:50px;background:no-repeat center center;
-    background-color:#868e96;background-attachment:scroll;
-    position:sticky;-webkit-background-size:cover;
-    -moz-background-size:cover;
-    -o-background-size:cover;background-size:cover;
-    height:600px;
-}
-
-.mainmenu.mainmenu2 {
-    text-align: center;
-    font-family: 'Nanum Myeongjo', serif;
-    vertical-align: center;
-}
-.mainmenu.overlay {
-	position:absolute;top:0;left:0;height:100%;width:100%;
-	background-color:#212529;opacity:.5
-}
-.mainmenu.mainmenu2, .mainmenu.sub-heading{
-    padding:200px 0 150px;color:#fff;
-    text-align: center;
-}
-
-@media only screen and (min-width:768px){ .mainmenu.page-heading,.mainmenu.post-heading,.mainmenu.site-heading{padding:200px 0}}
-

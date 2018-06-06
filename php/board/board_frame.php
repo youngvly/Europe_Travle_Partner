@@ -9,7 +9,6 @@
     <title>Clean Blog - Start Bootstrap Theme</title>
 
     <!-- Bootstrap core CSS -->
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
@@ -21,6 +20,7 @@
     <!-- Custom styles for this template -->
     <link href="../../css/clean-blog.min.css" rel="stylesheet">
     <link href="../../css/additional.css" rel="stylesheet">
+    <!-- <link href="../../css/input_label.css" rel="stylesheet"> -->
 
     <? 
         //session_start()
@@ -34,12 +34,15 @@
         include "../dbConnect.php";
 
         if($mode=='search'){
+           
             $sql="SELECT boardID,country,region,subject,DATE_FORMAT(app_date,'%Y-%m-%d')DATEONLY ,title,userID
             ,requiredPeople,engagedPeople,contents,hits,reg_date FROM $table";
-            $sql.="_board WHERE country LIKE '%$searchCountry%' ORDER BY boardID desc";
-            if($searchregion) $sql.="AND region LIKE'%$searchregion%' ";
-            if($searchsubject) $sql.="AND region LIKE'%$searchsubject%' ";
-            if($searchdate) $sql.="AND region LIKE'%$searchdate%' ";
+            if($searchCountry) $sql.="_board WHERE country LIKE '%$searchCountry%' ORDER BY boardID desc";
+            else{
+                $sql = "SELECT boardID,country,region,subject,DATE_FORMAT(app_date,'%Y-%m-%d')DATEONLY ,title,userID
+                    ,requiredPeople,engagedPeople,contents,hits,reg_date FROM $table";
+                $sql .= "_board order by boardID desc";
+            }
         }else{
             //east_partner_board 게시판출력
             $sql = "SELECT boardID,country,region,subject,DATE_FORMAT(app_date,'%Y-%m-%d')DATEONLY ,title,userID
@@ -59,12 +62,15 @@
         $start = ($page-1)* $scale;
         $number = $total_page-$start;
 
+        $where = split('_',$table);
     ?>
     <script>
-    //아이디 중복체크 함수
     function child(table,boardID){
-        document.getElementById('ifrm').style.height='120%';
-        item.location.href="board_item.php?table="+table+"&boardID="+boardID; 
+        //document.getElementById('ifrm').style.height='100%';
+        //item.location.href="board_item.php?table="+table+"&boardID="+boardID; 
+        $(document).ready(function(){
+            $("#framediv").load("board_item.php?table="+table+"&boardID="+boardID);
+        });
         }
     </script>
     </head>
@@ -72,27 +78,27 @@
         <input type="hidden" id="page" value="<?=$page?>">
                     <!-- Main Content -->
 
-    <div class="container" id="item">
-    <iframe class="col-lg-8 col-md-10 mx-auto" src="" id="ifrm" scrolling=yes frameborder=no  height=0 name="item"></iframe>
+    <div class="container" id="item" class="py-5">
+        <div id="framediv"></div>
     </div>
+
+
+    <div class="col-lg-3 col-md-12 mx-auto">
+    <form action="<?=$where[0]?>_partner_board.php?mode=search" method="post">
+        <div class="row py-3">
+        <div class="form-group floating-label-form-group controls">
+            <label for="searchCountry">국가 검색</label>
+            <input type="text" class="form-control" placeholder="국가 검색" 
+            name="searchCountry" required data-validation-required-message="Please enter country name">            
+        </div>
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="SUBMIT">SEARCH</button>
+            </div>
+            </div>
+    </form>
+    </div>
+
     <div class="container">
-    <div class="row">
-    <div class="searching pull-right">
-        <form action="east_partner_board.php?mode=search" method="post">
-            <span>주제</span>
-            <select name="searchsubject">
-                <option value="travel">관광</option>
-                <option value="eat">식사</option>
-                <option value="" selected> </option>
-            </select>
-            <!-- <button onclick="window.open('mapex.html','지역검색','width=430,height=500,location=no,status=no,scrollbars=yes');">지역선택</button> -->
-            <span>국가</span><input id="showcountry" type="text" name="searchCountry" length="5">
-            <span>지역</span><input id="showregion" type="text" name="searchregion" length="5">
-            <span>희망날짜</span><input type="date" name="searchdate">
-            <button type="submit" name="submitbt">검색</button> 
-        </form>
-    </div>
-    </div> <!-- row -->
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
         <p>
@@ -121,7 +127,7 @@
                 if(!$nameSQL) echo"sql error";
                 $namerow = mysql_fetch_array($nameSQL);
 
-                echo('<p class="post-meta">Posted by <a href="#"> ');
+                echo("<p class='post-meta'>Posted by <a href='../login/user_profile.php?id=$row[userID]'> ");
                 echo("$namerow[0]</a>  $row[reg_date]</p>");
                 echo('</a></div>');
               ?>
@@ -140,7 +146,7 @@
             <?
                 for($i=1;$i<=$total_page;$i++){
                     if($page == $i) echo("<b> $i </b>");
-                    else echo("<a href='east_partner_board.php?page=$i'> $i </a>");
+                    else echo("<a href='$where[0]_partner_board.php?page=$i'> $i </a>");
                 }
                 ?>
                 &nbsp;&nbsp;&nbsp;다음 >>

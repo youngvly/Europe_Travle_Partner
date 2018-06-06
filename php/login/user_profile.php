@@ -10,6 +10,7 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="../../js/hashtag.js"></script>
     <link href="../../css/login.css" rel="stylesheet" type="text/css">
     <?
         include '../dbConnect.php';
@@ -26,6 +27,32 @@
         else if ($age<50) $level = "adult";
         else $level = "silver";
     ?>
+    <script>var valuestr = "여행취향";</script>
+    <?  
+        $sqls = "SELECT * from traveltype where userID='$id'";
+        $results = mysql_query($sqls);
+        $rows = mysql_fetch_array($results);
+        $lists = array("photo","food","shopping","plan","walk","ride","naturals","city","silence","crowd");
+        foreach($lists as $l){
+            if($rows["$l"]){
+                echo("<script>
+                    valuestr += ','+'$l';
+                </script>");
+            }
+        }
+    ?>
+    <style>
+    input:focus{
+    outline: none;
+    }
+
+    </style>
+    <script>
+    var tagsinput = $('#hash').next();
+        tagsinput.removeClass('bootstrap-tagsinput');
+        tagsinput.find("input").remove();
+        tagsinput.css("padding-bottom", "10px");
+    </script>
 </head>
 <body>
 <div class="container">    
@@ -53,7 +80,10 @@
                             <?=$row['email']?></p></li>
                           </ul>
                           <hr>
-                          <div class="col-sm-5 col-xs-6 tital " ><?=$row['intro']?></div>
+                          <div class="col-sm-12 col-xs-6 tital py-3" ><?=$row['intro']?></div>
+                          <div class="col-sm-12 col-xs-6 tital py-3">
+                            <input  id="hash" value="" data-role="tagsinput" disabled style="outline: none;">
+                            </div>
                       </div>
 
                       
@@ -72,25 +102,33 @@
                         <table class="table">
                             <tr><th>주제</th><th>제목</th><th>국가</th><th>작성일</th></tr>
                         <?
-                            $sql = "SELECT * FROM EAST_PARTNER_BOARD WHERE userID = '$userId' ORDER BY boardID desc";
-                            $result = mysql_query($sql) or exit(mysql_error());
-                            if (mysql_num_rows($result)){
-                                while($row = mysql_fetch_array($result)){
-                                echo("<tr><td>$row[subject]</td><td> $row[title] </td> <td>$row[country]</td> <td>$row[reg_date]</td></tr>");
-                                }
-                            };
-                           
+                            $dir = array("East","west","south","north");
+                            foreach($dir as $d){
+                                $sql = "SELECT * FROM $d"."_PARTNER_BOARD WHERE userID = '$id' ORDER BY boardID desc";
+                                $result = mysql_query($sql) or exit(mysql_error());
+                                if (mysql_num_rows($result)){
+                                    while($row = mysql_fetch_array($result)){
+                                    echo("<tr><td>$row[subject]</td><td>
+                                        <a href='../board/board_item.php?table=$d"."_partner&boardID=$row[boardID]'> $row[title]</a></td> 
+                                        <td>$row[country]</td> <td>$row[reg_date]</td></tr>");
+                                    }
+                                };
+                        }
 
                         ?>
                         </table>
                     </div>
-                        </div>
+                    </div>
 
                     </div>
                 </div>
                 </div>
 
+                
             </div>
             </div>
+            <script>
+        document.getElementById('hash').value=valuestr;
+    </script>
 </body>
 </html>

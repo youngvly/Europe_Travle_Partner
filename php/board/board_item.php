@@ -56,7 +56,7 @@
             <table>
             <tr><td text-align='right'>조회수 :<?= $row['hits']?></td>
             <?
-                if($userId == $row['userID']){
+                if($userId == $row['userID'] || $userId == 'admin'){
             ?>
                 <td><a class="pull-right" href="delete_write.php?boardID=<?=$boardID?>&table=<?=$table?>">삭제</a>
                 <a class="pull-right" onclick='window.parent.location.href="board_write.php?table=<?=$table?>&mode=edit&boardID=<?=$boardID?>"'>수정</a></td>
@@ -103,7 +103,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                     <strong><?=$namerow[0]?></strong> <span class="text-muted"><?=$prow['reg_date']?></span>
-                    <? if($userId == $prow['userID'])
+                    <? if($userId == $prow['userID'] || $userId='admin')
                         echo("<a href='delete_ripple.php?ripID=$prow[ripID]&table=$table'>댓글삭제</a>")?>
                     </div>
                     <div class="panel-body">
@@ -125,24 +125,27 @@
                 </div><!-- /thumbnail --> 
                 </div><!-- /col-sm-1 -->
             <form name="RippleInput" id="rippleinputForm" action ="../board/insert_ripple.php" method="post" novalidate>
-                <div class="col-sm-">
-                <input type="hidden" name="boardID" value="<?=$row['boardID']?>">
-                <?
-                 $where = split('_',$table);
-                ?>
-                <input type="hidden" name="where" value="<?=$where[0]?>">
+                <div class="col-sm-12">
+                    <input type="hidden" name="boardID" value="<?=$row['boardID']?>">
+                    <?
+                    $where = split('_',$table);
+                    ?>
+                    <input type="hidden" name="where" value="<?=$where[0]?>">
                 <div class="control-group">
+                    <div class="row py-3">
                     <div class="form-group floating-label-form-group controls">
-                    <label>댓글입력</label>
-                    <input type="text" class="form-control" placeholder="댓글을 입력하세요" 
-                        name="ripple_content" required data-validation-required-message="Please enter ripple">
-                    <!-- <p class="help-block text-danger"></p> -->
+                        <label>댓글입력</label>
+                        <input type="text" class="form-control" placeholder="댓글을 입력하세요" 
+                            name="ripple_content" required data-validation-required-message="Please enter ripple">
+                        <!-- <p class="help-block text-danger"></p> -->
+                        </div>
+                    <div class="col-sm-2 pull-right">
+                        <button type="submit" class="btn btn-secondary" id="RippleButton">Enter</button>
+                    </div>
                     </div>
                 </div><!-- /control-group -->
                 </div><!-- /col-sm-5 -->
-                <div class="col-sm-2 pull-right">
-                <button type="submit" class="btn btn-secondary" id="RippleButton">Enter</button>
-                </div>
+                
             </form>
             </div> <!-- row -->
             </div><!-- /container of 댓글입력-->

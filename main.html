@@ -1,0 +1,118 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Europe_Travle_Partner</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+     <!--East Menu-->
+     <div class="mainmenu" style="background-image: url('img/east-bg.jpg')">
+        <div class="overlay"></div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="mainmenu2">
+                  
+                
+    
+    
+                  <a class="subheading" href='php/board/east_partner_board.php' role="button" aria-controls= "true" >
+                  <center><h1>East</h1>동유럽</a></center>
+    
+                </div><!--site-heading-->
+              </div><!--row-->
+            </div><!--/container-->
+          </div><!--overlay-->
+        </div><!--mainmenu-->
+        <!--WestMenu-->
+        <div class="mainmenu" style="background-image: url('img/west-bg.jpg')">
+        <div class="overlay"></div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="mainmenu2">
+    
+                  <a class="subheading" href='php/board/west_partner_board.php' role="button" aria-controls= "true" >
+                  <center><h1>West</h1>서유럽</a></center>
+                </div><!--site-heading-->
+              </div><!--row-->
+            </div><!--/container-->
+          </div><!--overlay-->
+        </div><!--mainmenu-->
+        <!--NorthMenu-->
+        <div class="mainmenu" style="background-image: url('img/north-bg.jpg')">
+        <div class="overlay"></div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="mainmenu2">
+    
+                  <a class="subheading" href='php/board/North_partner_board.php' role="button" aria-controls= "true" >
+                  <center><h1>North</h1>북유럽</a></center>
+                </div><!--site-heading-->
+              </div><!--row-->
+            </div><!--/container-->
+          </div><!--overlay-->
+        </div><!--mainmenu-->
+    
+        <!--SouthMenu-->
+        <div class="mainmenu" style="background-image: url('img/south-bg.jpg')">
+        <div class="overlay"></div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="mainmenu2">
+    
+                  <a class="subheading" href='php/board/South_partner_board.php' role="button" aria-controls= "true" >
+                  <center><h1>South</h1>남유럽</a></center>
+                </div><!--site-heading-->
+              </div><!--row-->
+            </div><!--/container-->
+          </div><!--overlay-->
+        </div><!--mainmenu-->
+ 
+        
+        
+    <header>
+        <a href ="">Home</a>
+        <a href ="">East</a>
+        <a href ="">West</a>
+        <a href ="">South</a>
+        <a href ="">North</a> 
+        <a href ="">MyPage</a>
+        <a href ="">Logout</a>
+    </header>
+
+    <div id="main">
+        <div class="main-menu" @mouseover="active = true" @mouseleave ="active=false" >
+            <a class = "main-a" >East Europe</a>
+            <showmenu v-show="active"></showmenu>
+        </div>
+        <div class="main-menu">
+            <a class = "main-a">West Europe</a>
+        </div>
+        <div class="main-menu">
+            <a class = "main-a">South Europe</a>
+        </div>
+        <div class="main-menu">
+            <a class = "main-a">North Europe</a>
+        </div>
+    </div>
+    <script>
+    //show second menu if hover
+    Vue.component('showmenu',{
+        template : '</br> \
+                    <a class ="second-menu">Review</a>\
+                    <a class = "second-menu">Partner</a> </br>'
+    })
+
+    var mainVue = new Vue({
+        el : '#main',
+        data : {
+            active : false
+        }
+    })
+    </script>
+</body>
+</html>
