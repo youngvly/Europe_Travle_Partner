@@ -68,6 +68,7 @@
     function child(table,boardID){
         //document.getElementById('ifrm').style.height='100%';
         //item.location.href="board_item.php?table="+table+"&boardID="+boardID; 
+        location.href='#framediv';
         $(document).ready(function(){
             $("#framediv").load("board_item.php?table="+table+"&boardID="+boardID);
         });
