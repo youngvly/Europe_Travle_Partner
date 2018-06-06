@@ -39,14 +39,18 @@
         $result = mysql_query($sql,$connect) or exit(mysql_error());
 
 
-        function uphits($hits, $boardID){
-            $sql = "UPDATE $table";
-            $sql .="_board SET hits = $hits+1 WHERE boardID = $boardID";                        
-        }
+
+          
+        
     ?>
     </head>
     <body>
     <?  ;while($row = mysql_fetch_array($result)){ 
+        $usql ="UPDATE $table";
+        $hitss = (int)$row['hits'] +1;
+        $usql.="_board SET hits = $hitss WHERE boardID = '$boardID'";
+        $result = mysql_query($usql); 
+
         $latlng = $row['latlng'];
         $boardID = $row['boardID'];?>
         <!--게시판 글,댓글출력-->
