@@ -104,6 +104,7 @@
         
            //$userid = $row["id"];
            $_SESSION['userId'] = "$id";
+           $_SESSION['username'] = "$row[name]";
           
            echo("
               <script>

@@ -3,6 +3,7 @@
   <head>
     <?
       session_start();
+      extract($_SESSION);
     ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -49,7 +50,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="#">REVIEW</a>
-                <a class="dropdown-item" href="php/board/east_partner_boot.php">PARTNER</a>
+                <a class="dropdown-item" href="php/board/east_partner_board.php">PARTNER</a>
 <!--                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Something else here</a> -->
               </div>
@@ -90,9 +91,27 @@
             <li class="nav-item">
               <a class="nav-link" href="contact.html">Contact</a>
             </li>
-            <li class="nav-item">
+            <li  class="nav-item dropdown">
             <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
-              <a class="nav-link" href="PHP/login/login.php">LOGIN</a>
+            <?
+              if(!$userId) echo('<a class="nav-link" href="PHP/login/login.php">LOGIN</a>');
+              else {
+                ?>
+                
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               ME
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <p class="text-center"><?=$username?> <br>안녕하세요</p>
+              <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="php/login/user_profile.php?id=<?=$userId?>">PROFILE</a>
+                <a class="dropdown-item" href="php/login/edit_profile.php?id=<?=$userId?>">EDIT</a>
+                <a class="dropdown-item" href="PHP/login/logout.php">LOGOUT</a>
+              </div>
+            <?
+              }
+            ?>
+              
             </li>
           </ul>
         </div>
@@ -121,16 +140,12 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="mainmenu2">
-              
-              <a class="subheading" data-toggle='collapse' href='#collapse-east'
-              role="button" aria-expanded="false" aria-controls="collapse-east" >
-              <h1>East</h1>동유럽</a>
-              <!--접히는 메뉴-->
-              <div class='collapse' id='collapse-east' >
-                    <div class='card card-body' style="background-color: rgba( 255, 255, 255, 0.2 )">
-                      <a></a>  
-                    </div>
-              </div><!--collapse-->
+
+
+
+              <a class="subheading" href='php/board/east_partner_board.php' role="button" aria-controls= "true" >
+              <center><h1>East</h1>동유럽</a></center>
+
             </div><!--site-heading-->
           </div><!--row-->
         </div><!--/container-->
@@ -143,15 +158,9 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="mainmenu2">
-              <h1>West</h1>
-              <a class="subheading" data-toggle='collapse' href='#collapse-east'
-              role="button" aria-expanded="false" aria-controls="collapse-east" >서유럽</a>
-              <!--접히는 메뉴-->
-              <div class='collapse' id='collapse-east' >
-                    <div class='card card-body' style="background-color: rgba( 255, 255, 255, 0.2 )">
-                      <a></a>  
-                    </div>
-              </div><!--collapse-->
+
+              <a class="subheading" href='php/board/west_partner_boot.php' role="button" aria-controls= "true" >
+              <center><h1>West</h1>서유럽</a></center>
             </div><!--site-heading-->
           </div><!--row-->
         </div><!--/container-->
@@ -164,15 +173,9 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="mainmenu2">
-              <h1>North</h1>
-              <a class="subheading" data-toggle='collapse' href='#collapse-east'
-              role="button" aria-expanded="false" aria-controls="collapse-east" >북유럽</a>
-              <!--접히는 메뉴-->
-              <div class='collapse' id='collapse-east' >
-                    <div class='card card-body' style="background-color: rgba( 255, 255, 255, 0.2 )">
-                      <a></a>  
-                    </div>
-              </div><!--collapse-->
+
+              <a class="subheading" href='php/board/North_partner_boot.php' role="button" aria-controls= "true" >
+              <center><h1>North</h1>북유럽</a></center>
             </div><!--site-heading-->
           </div><!--row-->
         </div><!--/container-->
@@ -186,19 +189,26 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="mainmenu2">
-              <h1>South</h1>
-              <a class="subheading" data-toggle='collapse' href='#collapse-east'
-              role="button" aria-expanded="false" aria-controls="collapse-east" >남유럽</a>
-              <!--접히는 메뉴-->
-              <div class='collapse' id='collapse-east' >
-                    <div class='card card-body' style="background-color: rgba( 255, 255, 255, 0.2 )">
-                      <a></a>  
-                    </div>
-              </div><!--collapse-->
+
+              <a class="subheading" href='php/board/South_partner_boot.php' role="button" aria-controls= "true" >
+              <center><h1>South</h1>남유럽</a></center>
             </div><!--site-heading-->
           </div><!--row-->
         </div><!--/container-->
       </div><!--overlay-->
     </div><!--mainmenu-->
+ 
+      <!--/.footer-->
+      <footer class="container-fluid text-center bg-lightgray">
+      <div class="copyrights" style="margin-top:25px;">
+        <img src="img/footer.png">
+          <p>Europe_Travle_Partner
+              <br><span>대표자 : 김다영 김지연 | 주소 : 충남 천안시 동남구 병천면 충절로 1600 | 관광사업자 등록번호:제2018-000001호 </span></br>
+              <span>고객센터 : 1577-9090 | E-mail : etp@koreatech.ac.kr | FAX : 123 - 456- 789</span></p>
+              <p>Copyright © 2018 ETP, All Rights Reserved</p>
+          <p><a href="https://github.com/youngvly/Europe_Travle_Partner" target="_blank" >SourceCodeLinkedin <i class="fa fa-linkedin-square" aria-hidden="true"></i> </a></p>
+      </div>
+      <!--/.footer-->
+  </footer>
 </div>
   </body>
